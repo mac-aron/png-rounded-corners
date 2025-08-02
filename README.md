@@ -1,2 +1,3 @@
 # png-rounded-corners
-Add rounded corners to PNG images
+
+To add rounded corners to PNG images, visit https://mac-aron.github.io/png-rounded-corners/
