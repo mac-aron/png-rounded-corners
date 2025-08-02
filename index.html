@@ -1,438 +1,456 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PNG rounded corners</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f5f5f5;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
 
-        .container {
-            background: white;
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-        }
+      .container {
+        background: white;
+        border-radius: 12px;
+        padding: 40px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+      }
 
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 2.2em;
-            font-weight: 300;
-        }
+      h1 {
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 2.2em;
+        font-weight: 300;
+      }
 
-        .upload-area {
-            border: 2px dashed #2196F3;
-            border-radius: 8px;
-            padding: 40px 20px;
-            margin-bottom: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: #f3f8ff;
-        }
+      .upload-area {
+        border: 2px dashed #2196f3;
+        border-radius: 8px;
+        padding: 40px 20px;
+        margin-bottom: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: #f3f8ff;
+      }
 
-        .upload-area:hover {
-            border-color: #1976D2;
-            background: #e3f2fd;
-        }
+      .upload-area:hover {
+        border-color: #1976d2;
+        background: #e3f2fd;
+      }
 
-        .upload-area.dragover {
-            border-color: #1976D2;
-            background: #e3f2fd;
-        }
+      .upload-area.dragover {
+        border-color: #1976d2;
+        background: #e3f2fd;
+      }
 
-        .upload-text {
-            color: #666;
-            font-size: 1.1em;
-            margin-bottom: 10px;
-        }
+      .upload-text {
+        color: #666;
+        font-size: 1.1em;
+        margin-bottom: 10px;
+      }
 
-        .upload-subtext {
-            color: #999;
-            font-size: 0.9em;
-        }
+      .upload-subtext {
+        color: #999;
+        font-size: 0.9em;
+      }
 
-        #fileInput {
-            display: none;
-        }
+      #fileInput {
+        display: none;
+      }
 
-        .controls {
-            margin: 30px 0;
-            padding: 20px;
-            background: #f3f8ff;
-            border-radius: 8px;
-        }
+      .controls {
+        margin: 30px 0;
+        padding: 20px;
+        background: #f3f8ff;
+        border-radius: 8px;
+      }
 
-        .slider-container {
-            margin: 20px 0;
-        }
+      .slider-container {
+        margin: 20px 0;
+      }
 
-        .slider-label {
-            display: block;
-            color: #333;
-            font-weight: 500;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
+      .slider-label {
+        display: block;
+        color: #333;
+        font-weight: 500;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+      }
 
-        .slider {
-            width: 100%;
-            height: 8px;
-            border-radius: 5px;
-            background: #ddd;
-            outline: none;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-            appearance: none;
-        }
+      .slider {
+        width: 100%;
+        height: 8px;
+        border-radius: 5px;
+        background: #ddd;
+        outline: none;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+        appearance: none;
+      }
 
-        .slider:hover {
-            opacity: 1;
-        }
+      .slider:hover {
+        opacity: 1;
+      }
 
-        .slider::-webkit-slider-thumb {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #2196F3;
-            cursor: pointer;
-        }
+      .slider::-webkit-slider-thumb {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #2196f3;
+        cursor: pointer;
+      }
 
-        .slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #2196F3;
-            cursor: pointer;
-            border: none;
-        }
+      .slider::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #2196f3;
+        cursor: pointer;
+        border: none;
+      }
 
-        .radius-value {
-            display: inline-block;
-            background: #2196F3;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-weight: 500;
-            margin-left: 10px;
-            min-width: 50px;
-            text-align: center;
-            font-size: 0.9em;
-        }
+      .radius-value {
+        display: inline-block;
+        background: #2196f3;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-weight: 500;
+        margin-left: 10px;
+        min-width: 50px;
+        text-align: center;
+        font-size: 0.9em;
+      }
 
-        .preview-area {
-            margin: 30px 0;
-            min-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+      .preview-area {
+        margin: 30px 0;
+        min-height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-        #previewCanvas {
-            max-width: 100%;
-            max-height: 400px;
-        }
+      #previewCanvas {
+        max-width: 100%;
+        max-height: 400px;
+      }
 
-        .download-btn {
-            background: #2196F3;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-size: 1em;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
+      .download-btn {
+        background: #2196f3;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-size: 1em;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
 
-        .download-btn:hover {
-            background: #1976D2;
-        }
+      .download-btn:hover {
+        background: #1976d2;
+      }
 
-        .download-btn:active {
-            background: #1565C0;
-        }
+      .download-btn:active {
+        background: #1565c0;
+      }
 
-        .download-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+      .download-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
 
-        .hidden {
-            display: none;
-        }
+      .hidden {
+        display: none;
+      }
 
-        .file-info {
-            color: #666;
-            font-size: 0.9em;
-            margin-top: 10px;
-        }
+      .file-info {
+        color: #666;
+        font-size: 0.9em;
+        margin-top: 10px;
+      }
 
-        .footer {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            color: #999;
-            font-size: 0.9em;
-        }
+      .footer {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+        color: #999;
+        font-size: 0.9em;
+      }
 
-        .footer a {
-            color: #2196F3;
-            text-decoration: none;
-            font-weight: 500;
-        }
+      .footer a {
+        color: #2196f3;
+        text-decoration: none;
+        font-weight: 500;
+      }
 
-        .footer a:hover {
-            color: #1976D2;
-            text-decoration: underline;
-        }
+      .footer a:hover {
+        color: #1976d2;
+        text-decoration: underline;
+      }
 
-        .footer strong {
-            color: #333;
-        }
+      .footer strong {
+        color: #333;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>PNG rounded corners</h1>
-        
-        <div class="upload-area" id="uploadArea">
-            <div class="upload-text">Click to upload or drag & drop your PNG image</div>
-            <div class="upload-subtext">PNG files only</div>
-            <input type="file" id="fileInput" accept="image/png">
-            <div class="file-info hidden" id="fileInfo"></div>
-        </div>
+      <h1>PNG rounded corners</h1>
 
-        <div class="controls hidden" id="controls">
-            <div class="slider-container">
-                <label class="slider-label">
-                    Corner radius: <span class="radius-value" id="radiusValue">20px</span>
-                </label>
-                <input type="range" id="radiusSlider" class="slider" min="0" max="100" value="20">
-            </div>
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-text">
+          Click to upload or drag & drop your PNG image
         </div>
+        <div class="upload-subtext">PNG files only</div>
+        <input type="file" id="fileInput" accept="image/png" />
+        <div class="file-info hidden" id="fileInfo"></div>
+      </div>
 
-        <div class="preview-area">
-            <canvas id="previewCanvas" class="hidden"></canvas>
-            <div id="previewPlaceholder">Upload an image to see preview</div>
+      <div class="controls hidden" id="controls">
+        <div class="slider-container">
+          <label class="slider-label">
+            Corner radius:
+            <span class="radius-value" id="radiusValue">20px</span>
+          </label>
+          <input
+            type="range"
+            id="radiusSlider"
+            class="slider"
+            min="0"
+            max="100"
+            value="20"
+          />
         </div>
+      </div>
 
-        <button class="download-btn hidden" id="downloadBtn" disabled>Download rounded image</button>
+      <div class="preview-area">
+        <canvas id="previewCanvas" class="hidden"></canvas>
+        <div id="previewPlaceholder">Upload an image to see preview</div>
+      </div>
 
-        <div class="footer">
-            Made with ❤️ by <strong>Aron Eggens</strong> | <a href="https://github.com/mac-aron" target="_blank">GitHub</a>
-        </div>
+      <button class="download-btn hidden" id="downloadBtn" disabled>
+        Download rounded image
+      </button>
+
+      <div class="footer">
+        Made with ❤️ by <strong>Aron Eggens</strong> and
+        <strong>Claude</strong> |
+        <a href="https://github.com/mac-aron" target="_blank">GitHub</a>
+      </div>
     </div>
 
     <script>
-        let originalImage = null;
-        let canvas = null;
-        let ctx = null;
-        let originalFileName = '';
+      let originalImage = null;
+      let canvas = null;
+      let ctx = null;
+      let originalFileName = "";
 
-        // Initialize elements
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('fileInput');
-        const fileInfo = document.getElementById('fileInfo');
-        const controls = document.getElementById('controls');
-        const radiusSlider = document.getElementById('radiusSlider');
-        const radiusValue = document.getElementById('radiusValue');
-        const previewCanvas = document.getElementById('previewCanvas');
-        const previewPlaceholder = document.getElementById('previewPlaceholder');
-        const downloadBtn = document.getElementById('downloadBtn');
+      // Initialize elements
+      const uploadArea = document.getElementById("uploadArea");
+      const fileInput = document.getElementById("fileInput");
+      const fileInfo = document.getElementById("fileInfo");
+      const controls = document.getElementById("controls");
+      const radiusSlider = document.getElementById("radiusSlider");
+      const radiusValue = document.getElementById("radiusValue");
+      const previewCanvas = document.getElementById("previewCanvas");
+      const previewPlaceholder = document.getElementById("previewPlaceholder");
+      const downloadBtn = document.getElementById("downloadBtn");
 
-        canvas = previewCanvas;
-        ctx = canvas.getContext('2d');
+      canvas = previewCanvas;
+      ctx = canvas.getContext("2d");
 
-        // Upload area click
-        uploadArea.addEventListener('click', () => fileInput.click());
+      // Upload area click
+      uploadArea.addEventListener("click", () => fileInput.click());
 
-        // Drag and drop functionality
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.classList.add('dragover');
-        });
+      // Drag and drop functionality
+      uploadArea.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        uploadArea.classList.add("dragover");
+      });
 
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.classList.remove('dragover');
-        });
+      uploadArea.addEventListener("dragleave", () => {
+        uploadArea.classList.remove("dragover");
+      });
 
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFile(files[0]);
-            }
-        });
+      uploadArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove("dragover");
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          handleFile(files[0]);
+        }
+      });
 
-        // File input change
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                handleFile(e.target.files[0]);
-            }
-        });
+      // File input change
+      fileInput.addEventListener("change", (e) => {
+        if (e.target.files.length > 0) {
+          handleFile(e.target.files[0]);
+        }
+      });
 
-        // Slider change
-        radiusSlider.addEventListener('input', (e) => {
-            const radius = e.target.value;
-            radiusValue.textContent = radius + 'px';
-            
-            if (originalImage) {
-                applyRoundedCorners(radius);
-            }
-        });
+      // Slider change
+      radiusSlider.addEventListener("input", (e) => {
+        const radius = e.target.value;
+        radiusValue.textContent = radius + "px";
 
-        // Download button
-        downloadBtn.addEventListener('click', downloadImage);
+        if (originalImage) {
+          applyRoundedCorners(radius);
+        }
+      });
 
-        function handleFile(file) {
-            if (!file.type.includes('png')) {
-                alert('Please select a PNG file only.');
-                return;
-            }
+      // Download button
+      downloadBtn.addEventListener("click", downloadImage);
 
-            // Store the original filename
-            originalFileName = file.name.replace('.png', '');
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const img = new Image();
-                img.onload = () => {
-                    originalImage = img;
-                    
-                    // Show file info
-                    fileInfo.textContent = `${file.name} (${img.width}×${img.height}px)`;
-                    fileInfo.classList.remove('hidden');
-                    
-                    // Show controls and apply initial rounding
-                    controls.classList.remove('hidden');
-                    downloadBtn.classList.remove('hidden');
-                    
-                    applyRoundedCorners(radiusSlider.value);
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
+      function handleFile(file) {
+        if (!file.type.includes("png")) {
+          alert("Please select a PNG file only.");
+          return;
         }
 
-        function applyRoundedCorners(radius) {
-            if (!originalImage) return;
+        // Store the original filename
+        originalFileName = file.name.replace(".png", "");
 
-            const img = originalImage;
-            canvas.width = img.width;
-            canvas.height = img.height;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            originalImage = img;
 
-            // Clear canvas with transparent background
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Show file info
+            fileInfo.textContent = `${file.name} (${img.width}×${img.height}px)`;
+            fileInfo.classList.remove("hidden");
 
-            // Save the current context state
-            ctx.save();
+            // Show controls and apply initial rounding
+            controls.classList.remove("hidden");
+            downloadBtn.classList.remove("hidden");
 
-            // Calculate radius as percentage of smaller dimension for better scaling
-            const minDimension = Math.min(img.width, img.height);
-            const actualRadius = Math.min(parseInt(radius) * (minDimension / 200), minDimension / 2);
+            applyRoundedCorners(radiusSlider.value);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
 
-            // Create rounded rectangle path
-            const w = canvas.width;
-            const h = canvas.height;
-            const r = actualRadius;
+      function applyRoundedCorners(radius) {
+        if (!originalImage) return;
 
-            ctx.beginPath();
-            ctx.moveTo(r, 0);
-            ctx.lineTo(w - r, 0);
-            ctx.quadraticCurveTo(w, 0, w, r);
-            ctx.lineTo(w, h - r);
-            ctx.quadraticCurveTo(w, h, w - r, h);
-            ctx.lineTo(r, h);
-            ctx.quadraticCurveTo(0, h, 0, h - r);
-            ctx.lineTo(0, r);
-            ctx.quadraticCurveTo(0, 0, r, 0);
-            ctx.closePath();
+        const img = originalImage;
+        canvas.width = img.width;
+        canvas.height = img.height;
 
-            // Clip to rounded rectangle
-            ctx.clip();
+        // Clear canvas with transparent background
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw the image
-            ctx.drawImage(img, 0, 0);
+        // Save the current context state
+        ctx.save();
 
-            // Restore context state
-            ctx.restore();
+        // Calculate radius as percentage of smaller dimension for better scaling
+        const minDimension = Math.min(img.width, img.height);
+        const actualRadius = Math.min(
+          parseInt(radius) * (minDimension / 200),
+          minDimension / 2
+        );
 
-            // Show canvas and hide placeholder
-            canvas.classList.remove('hidden');
-            previewPlaceholder.style.display = 'none';
-            downloadBtn.disabled = false;
-        }
+        // Create rounded rectangle path
+        const w = canvas.width;
+        const h = canvas.height;
+        const r = actualRadius;
 
-        function downloadImage() {
-            if (!canvas) return;
+        ctx.beginPath();
+        ctx.moveTo(r, 0);
+        ctx.lineTo(w - r, 0);
+        ctx.quadraticCurveTo(w, 0, w, r);
+        ctx.lineTo(w, h - r);
+        ctx.quadraticCurveTo(w, h, w - r, h);
+        ctx.lineTo(r, h);
+        ctx.quadraticCurveTo(0, h, 0, h - r);
+        ctx.lineTo(0, r);
+        ctx.quadraticCurveTo(0, 0, r, 0);
+        ctx.closePath();
 
-            // Create filename with _rounded suffix
-            const downloadName = originalFileName ? `${originalFileName}_rounded.png` : 'rounded-image.png';
+        // Clip to rounded rectangle
+        ctx.clip();
 
-            try {
-                // Create a temporary canvas to ensure transparency is preserved
-                const tempCanvas = document.createElement('canvas');
-                const tempCtx = tempCanvas.getContext('2d');
-                
-                tempCanvas.width = canvas.width;
-                tempCanvas.height = canvas.height;
-                
-                // Copy the current canvas content
-                tempCtx.drawImage(canvas, 0, 0);
-                
-                // Convert to blob and download
-                tempCanvas.toBlob((blob) => {
-                    if (blob) {
-                        const url = URL.createObjectURL(blob);
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.download = downloadName;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                        URL.revokeObjectURL(url);
-                    } else {
-                        // Fallback to dataURL method
-                        const link = document.createElement('a');
-                        link.download = downloadName;
-                        link.href = canvas.toDataURL('image/png');
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                    }
-                }, 'image/png');
-                
-            } catch (error) {
-                console.error('Download failed:', error);
-                // Fallback method
-                const link = document.createElement('a');
-                link.download = downloadName;
-                link.href = canvas.toDataURL('image/png');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+        // Draw the image
+        ctx.drawImage(img, 0, 0);
+
+        // Restore context state
+        ctx.restore();
+
+        // Show canvas and hide placeholder
+        canvas.classList.remove("hidden");
+        previewPlaceholder.style.display = "none";
+        downloadBtn.disabled = false;
+      }
+
+      function downloadImage() {
+        if (!canvas) return;
+
+        // Create filename with _rounded suffix
+        const downloadName = originalFileName
+          ? `${originalFileName}_rounded.png`
+          : "rounded-image.png";
+
+        try {
+          // Create a temporary canvas to ensure transparency is preserved
+          const tempCanvas = document.createElement("canvas");
+          const tempCtx = tempCanvas.getContext("2d");
+
+          tempCanvas.width = canvas.width;
+          tempCanvas.height = canvas.height;
+
+          // Copy the current canvas content
+          tempCtx.drawImage(canvas, 0, 0);
+
+          // Convert to blob and download
+          tempCanvas.toBlob((blob) => {
+            if (blob) {
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = downloadName;
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              URL.revokeObjectURL(url);
+            } else {
+              // Fallback to dataURL method
+              const link = document.createElement("a");
+              link.download = downloadName;
+              link.href = canvas.toDataURL("image/png");
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
             }
+          }, "image/png");
+        } catch (error) {
+          console.error("Download failed:", error);
+          // Fallback method
+          const link = document.createElement("a");
+          link.download = downloadName;
+          link.href = canvas.toDataURL("image/png");
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
         }
+      }
     </script>
-</body>
+  </body>
 </html>
